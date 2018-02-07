@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ejercicio selectores</title>
+		<link rel="stylesheet" type="text/css" href="JSstyle.css">
+		<script type="text/javascript">
+		var btn;
+		var div, divs;
+		var i;
+			function rmRojo() {
+				div = document.getElementById("div1");
+				div.style.display = (div.style.display=="none") ? "block" : "none";
+			}
+
+			function rmAzul() {
+				divs = document.getElementsByClassName("divclass");
+				for (i = 0; i < divs.length; i++) {
+					divs[i].style.display = (divs[i].style.display=="none") ? "block" : "none";
+				}
+			}
+
+			function deleteAll() {
+				divs = document.getElementsByTagName("div");
+
+				for (i = 0; i < divs.length-1; i++) {
+					divs[i].style.display="none";
+				}
+
+				btn = document.getElementById("boto3");
+				btn.remove();
+			}
+
+			window.onload = function(){
+				document.getElementById("boto1").onclick=rmRojo;
+				document.getElementById("boto2").onclick=rmAzul;
+				document.getElementById("boto3").onclick=deleteAll;
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="div1">
+		</div>
+
+		<div class="divclass">
+		</div>
+
+		<div class="divclass">
+		</div>
+
+		<div id="buttons">
+			<button id="boto1">Esconder/mostrar rojo</button>
+			<button id="boto2">Esconder azules</button>
+			<button id="boto3">Esconder todo</button>
+		</div>
+		
+	</body>
+
+</html>
