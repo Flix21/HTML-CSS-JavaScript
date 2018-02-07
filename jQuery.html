@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style> 
+        div {
+            width: 400px;
+            height: 400px;
+            background: red;
+            position: relative;
+        }
+
+        @keyframes rotate {
+            0%   {transform:rotate(90deg); background: orange;}
+            25%  {transform:rotate(180deg); background: yellow;}
+            75%  {transform:rotate(270deg); background: green;}
+            100% {transform:rotate(360deg); background: blue;}
+        }
+
+        
+    </style>
+    <script type="text/javascript">
+        var valor = 0;
+        $(window).on("load", function() {
+            $("#btn-grande").on("click", grande);
+            $("#btn-pequeño").on("click", pequeño);
+            $("#btn-circulo").on("click", circulo);
+            $("#btn-faddingOut").on("click", faddingOut);
+            $("#btn-faddingIn").on("click", faddingIn);
+        })
+
+        function grande() {
+            $("#div").animate({
+                width: "800px",
+                height: "800px"
+            }, 1500);
+        }
+
+        function pequeño() {
+            $("#div").animate({
+                width: "200px",
+                height: "200px",
+            }, 1500);
+        }
+
+        function circulo() {
+            valor += 0.04;
+
+            var posicion = Math.sin(valor);
+            var posicioncos = Math.cos(valor);
+
+            var posicion1 = (posicion*100)+200;
+            var posicion2 = (posicioncos*100)+200;
+
+            $("#div").css("left", posicion1+"px");
+            $("#div").css("top", posicion2+"px");
+            setTimeout("circulo()",10);
+        }
+
+        function faddingOut() {
+            $("#div").fadeOut();
+        }
+        function faddingIn() {
+            $("#div").fadeIn();
+        }
+    </script>
+</head>
+
+<body>
+    <h1>jQuery</h1>
+
+    <div id="div"></div>
+    <button id="btn-grande">Grande</button>
+    <button id="btn-pequeño">Pequeño</button>
+    <button id="btn-circulo">Circulo</button>
+    <button id="btn-faddingOut">Fadding-Out</button>
+    <button id="btn-faddingIn">Fadding-In</button>
+</body>
+</html>
