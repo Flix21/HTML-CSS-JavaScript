@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<style>
+			table, td, th {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+      		td {
+        		width:20%;
+        		text-align: center;
+      		}
+      		div {
+      			display: flex;
+      			justify-content: space-between;
+      		}
+		</style>
+		<script type="text/javascript">
+			var cur_id = 1;
+			var searched;
+			$(window).on("load", function() {
+				init();
+	            $("#btn-last").on("click", last);
+	            $("#btn-next").on("click", next);
+	            $("#btn-search").on("click", search);
+        	})
+
+        	function getData(identifier) {
+        		$.get("https://www.pokeapi.co/api/v2/pokemon/" + identifier + "/", function (data) {
+	        			if(data != null) {
+	        				$("#id").html(data.id);
+		        			$("#normal").attr("src", data.sprites.back_default);
+		        			$("#shiny").attr("src", data.sprites.front_shiny);
+		        			$("#name").html(data.name);
+		        			$("#type").html(data.types[0].type.name);
+	        			}
+	        			else {
+	        				$("#id").html("no hay datos");
+		        			$("#normal").html("no hay datos");
+		        			$("#shiny").html("no hay datos");
+		        			$("#name").html("no hay datos");
+		        			$("#type").html("no hay datos");
+	        			}
+        			});
+        	}
+
+        	function init() {
+        		getData(1);
+        	}
+
+        	function last() {
+        		if (cur_id <= 1) alert("No hay pokemons anteriores");
+        		else {
+        			getData(cur_id-1);
+        			cur_id -= 1;
+        		}
+        	}
+
+        	function next() {
+        		if (cur_id >= 802) alert("No hay más pokemons");
+        		else {
+        			getData(cur_id+1);
+        			cur_id += 1;
+        		}
+        	}
+
+        	function search() {
+        		searched = $("#input").val();
+        		if (searched == "") alert("Introduce algun valor en el campo de busqueda");
+        		else if (searched < 0 || searched > 802) alert("Este pokemon no existe");
+        		else {
+        			getData(searched);
+        			cur_id = searched;
+        		}
+        	}
+		</script>
+	</head>
+
+	<body>
+		<table style="width:100%" title="Pokemon">
+      <tr>
+        <th>ID</th>
+        <th>Normal sprite</th>
+        <th>Shiny sprite</th>
+        <th>Name</th>
+        <th>Type</th>
+      </tr>
+      <tr>
+        <td id="id"></td>
+        <td><img id="normal"></td> 
+        <td><img id="shiny"></td>
+        <td id="name"></td>
+        <td id="type"></td>
+      </tr>
+	</table>
+
+	<div>
+		<button id="btn-last">Last</button>
+		<div>
+			<input type="text" name="search" id="input" placeholder="Introduce el ID del pokemon" value="">
+			<button id="btn-search">Search</button>
+		</div>
+		<button id="btn-next">Next</button>
+	</div>
+
+	</body>
+</html>
